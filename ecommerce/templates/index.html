@@ -1,53 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+{% extends "base.html" %}
 
-</head>
-<body>
-    <header>
-        <h1>Bienvenidos a la Tienda</h1>
-        <nav>
-            <ul>
-                <li><a href="">Inicio</a></li>
-                <li><a href="">Tienda</a></li>
-                <li><a href="">Carrito</a></li>
-                <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
-                <li><a href="{% url 'login' %}">Registrarse</a></li>
-            </ul>
-        </nav>
-    </header>
+{% block page_titulo %}
+    <h2>Productos disponibles</h2>
+{% endblock page_titulo %}
 
-    <main>
-        <h2>Productos disponibles</h2>
-        
-        <div class="productos">
-            {% if productos %}
-                <div class="producto-list">
-                    {% for producto in productos %}
-                        <div class="producto-item">
-                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="producto-img">
-                            <h3>{{ producto.nombre }}</h3>
-                            <p>Precio: ${{ producto.precio }}</p>
-                            <p>{{ producto.descripcion }}</p>
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="producto" value="{{ producto.id }}">
-                                <button type="submit">Agregar al carrito</button>
-                            </form>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p>No hay productos disponibles.</p>
-            {% endif %}
-        </div>
-    </main>
+{% block page_content %}
+    <div class="productos">
+        {% if productos %}
+            <div class="producto-list">
+                {% for producto in productos %}
+                    <div class="producto-item">
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="producto-img">
+                        <h3>{{ producto.nombre }}</h3>
+                        <p>Precio: ${{ producto.precio }}</p>
+                        <p>{{ producto.descripcion }}</p>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <button type="submit">Agregar al carrito</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay productos disponibles.</p>
+        {% endif %}
+    </div>
 
-    <footer>
-        <p>&copy; 2025 Tienda Online</p>
-    </footer>
-</body>
-</html>
+{% endblock page_content %}

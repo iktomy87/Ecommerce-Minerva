@@ -92,8 +92,6 @@ class Orden(models.Model):
     @staticmethod
     def get_orders_by_customer(customer_id): 
         return Orden.objects.filter(cliente=customer_id).order_by('-fecha') 
-    
-    
 
 
 
